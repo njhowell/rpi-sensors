@@ -1,12 +1,12 @@
+import logging
+import requests
+logging.getLogger(__name__)
+
 def LogValue(sensorname, value, api_key, port, prtg_host, ssl):
-    if(ssl)
-    {
+    if ssl:
         url_scheme = 'https'
-    }
-    else
-    {
+    else:
         url_scheme = 'http'
-    }
 
     json_response = {
         "prtg": {

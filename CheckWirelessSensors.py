@@ -5,7 +5,6 @@ from datetime import datetime
 import math
 import urllib2
 import logging
-import requests
 
 import LogToPRTG
 import WirelessSensorConfig
@@ -34,12 +33,7 @@ def CalculateTemp(adc_value):
 def CheckForData():
     global port
     global baud
-    global prtg_host
-    global temp_port
-    global temp_api_key
-    global light_api_key
-    global light_port
-    global use_ssl
+
     logging.debug("Opening Serial port %s with baud rate %s", port, baud)
     ser = serial.Serial(port=port, baudrate=baud)
     sleep(0.2)
@@ -67,14 +61,14 @@ def CheckForData():
                     adc = int(data[4:].strip('-'))
                     temp = CalculateTemp(adc)
                     logging.debug("Temperature calculated at %s", str(temp))
-                    LogValue("Temperature", str(temp), temp_api_key, temp_port, prtg_host, use_ssl)
+                    LogToPRTG.LogValue("Temperature", str(temp), WirelessSensorConfig.temp_api_key, WirelessSensorConfig.temp_port, WirelessSensorConfig.prtg_host, WirelessSensorConfig.use_ssl)
 
                 elif data.startswith('A01'):
                     logging.info("received message for input A01")
                     adc = int(data[4:].strip('-'))
                     lightpc = (float(adc) / 1023) * 100
                     logging.debug("light value calculated at %s", str(lightpc))
-                    LogValue("Light Level", str(lightpc), light_api_key, light_port, prtg_host, use_ssl)
+                    LogToPRTG.LogValue("Light Level", str(lightpc), WirelessSensorConfig.light_api_key, WirelessSensorConfig.light_port, WirelessSensorConfig.prtg_host, WirelessSensorConfig.use_ssl)
 
     ser.close()
 
