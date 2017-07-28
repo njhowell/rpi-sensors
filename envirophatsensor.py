@@ -11,7 +11,7 @@ logging.basicConfig(filename='/var/log/sensors.log',level=logging.DEBUG)
 logging.info("Starting up")
 
 while True:
-    temp = weather.temperature()-10 
+    temp = weather.temperature()-6 
     logging.info("Got temperature of %s", str(temp))
     
     lightlevel = light.light()
