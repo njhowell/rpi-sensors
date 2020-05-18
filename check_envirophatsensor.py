@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 from envirophat import weather, light
-import envirophatconfig
 from datetime import datetime
 import sys
 import getopt
